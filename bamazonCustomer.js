@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var Table = require("cli-table");
 
 var connection = mysql.createConnection({
 	host: "localhost",
@@ -18,16 +19,17 @@ connection.connect(function(err){
 function displayStock() {
 	connection.query("SELECT * FROM products", function(err, res){
 		if (err) throw err;
-		console.log("CURRENT INVENTORY" +
-			"\n===========================================================================================================")
+			var inventoryTable = new Table({
+            head: ['Item ID', 'Product Name', 'Department', 'Price', 'Stock'],
+            colWidths: [10, 25, 20, 10, 15]
+        });
+		console.log("===========================================================================================================")
 		for (var i = 0; i < res.length; i++)  {
-		console.log(
-			" Item ID: " + res[i].item_id + " | " +
-			" Product Name: " + res[i].product_name + " | " +
-			" Department: " + res[i].department_name + " | " +
-			" Price: " + res[i].price + " | " +
-			" Stock: " + res[i].stock_quantity );
+        	inventoryTable.push(
+               [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]
+            );
 	}
+		console.log(inventoryTable.toString());
 		console.log("==========================================================================================================")
 		pickPurchase();
 	});
@@ -46,13 +48,17 @@ function pickPurchase(){
   	message: "How many would you like to purchase?"
   }
 ]).then(function(answers) {
-		var parsedNum = parseInt(answers.productId)
-		var parsedQuan = parseInt(answers.quantity)
+		var parsedNum = parseInt(answers.productId);
+		var parsedQuan = parseInt(answers.quantity);
 	      connection.query("SELECT * FROM products WHERE item_id=?", [answers.productId], function(err, res) {
+	      	var dept = res[0].department_name;
+	      	var total = parseInt(answers.quantity * res[0].price);
 	      	if (answers.quantity <= res[0].stock_quantity){
 	      		var remStock = parseInt(res[0].stock_quantity - answers.quantity)
 	      		console.log("Purchasing " + answers.quantity + " of " + res[0].product_name + " for " + (answers.quantity * res[0].price + " dollars"));
 	      		connection.query("UPDATE products SET stock_quantity = " + remStock + " WHERE item_id=" + parsedNum + ";" );
+	      		connection.query("UPDATE departments SET product_sales = product_sales + " + total + " WHERE department_name=" + dept + ";" );
+	      		displayStock();
 	      	}
 	      	else if (answers.quantity > res[0].stock_quantity) {
 	      		console.log("Sorry, we don't have enough " + res[0].product_name + " to fill that order! Please check inventory quantity and try again.")

@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var Table = require("cli-table");
 
 var connection = mysql.createConnection({
 	host: "localhost",
@@ -18,16 +19,17 @@ connection.connect(function(err){
 function displayStock() {
 	connection.query("SELECT * FROM products", function(err, res){
 		if (err) throw err;
-		console.log("CURRENT INVENTORY" +
-			"\n===========================================================================================================")
+			var inventoryTable = new Table({
+            head: ['Item ID', 'Product Name', 'Department', 'Price', 'Stock'],
+            colWidths: [10, 25, 20, 10, 15]
+        });
+		console.log("===========================================================================================================")
 		for (var i = 0; i < res.length; i++)  {
-		console.log(
-			" Item ID: " + res[i].item_id + " | " +
-			" Product Name: " + res[i].product_name + " | " +
-			" Department: " + res[i].department_name + " | " +
-			" Price: " + res[i].price + " | " +
-			" Stock: " + res[i].stock_quantity );
+        	inventoryTable.push(
+               [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]
+            );
 	}
+		console.log(inventoryTable.toString());
 		console.log("==========================================================================================================")
 		managerOptions();
 	});
@@ -64,20 +66,21 @@ function managerOptions(){
 
 function lowInventory(){
 	 connection.query("SELECT * FROM products ORDER BY stock_quantity;", function(err, res){
-	 	if (err) throw err;
-			console.log("ITEMS WITH LOWEST INVENTORY" +
-			"\n===========================================================================================================")
-				for (var i = 0; i < res.length; i++)  {
-					console.log(
-					" Item ID: " + res[i].item_id + " | " +
-					" Product Name: " + res[i].product_name + " | " +
-					" Department: " + res[i].department_name + " | " +
-					" Price: " + res[i].price + " | " +
-					" Stock: " + res[i].stock_quantity );
-				}
-			console.log("==========================================================================================================")
-			managerOptions();
-	 });
+		if (err) throw err;
+			var inventoryTable = new Table({
+            head: ['Item ID', 'Product Name', 'Department', 'Price', 'Stock'],
+            colWidths: [10, 25, 20, 10, 15]
+        });
+		console.log("===========================================================================================================")
+		for (var i = 0; i < res.length; i++)  {
+        	inventoryTable.push(
+               [res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]
+            );
+	}
+		console.log(inventoryTable.toString());
+		console.log("==========================================================================================================")
+		managerOptions();
+	});
 };
 
 function addNewProd(){
