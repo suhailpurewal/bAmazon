@@ -42,7 +42,7 @@ function deptSales(){
 		if (err) throw err;
 			var salesTable = new Table({
             head: ['Department ID', 'Department Name', 'Overhead Costs', 'Product Sales', 'Total Profit'],
-            colWidths: [10, 25, 20, 10, 15]
+            colWidths: [15, 25, 20, 15, 15]
         });
 		console.log("===========================================================================================================")
 		for (var i = 0; i < res.length; i++)  {

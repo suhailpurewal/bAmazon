@@ -57,7 +57,7 @@ function pickPurchase(){
 	      		var remStock = parseInt(res[0].stock_quantity - answers.quantity)
 	      		console.log("Purchasing " + answers.quantity + " of " + res[0].product_name + " for " + (answers.quantity * res[0].price + " dollars"));
 	      		connection.query("UPDATE products SET stock_quantity = " + remStock + " WHERE item_id=" + parsedNum + ";" );
-	      		connection.query("UPDATE departments SET product_sales = product_sales + " + total + " WHERE department_name=" + dept + ";" );
+	      		connection.query("UPDATE departments SET product_sales = product_sales + " + total + " WHERE department_name='" + dept + "';" );
 	      		displayStock();
 	      	}
 	      	else if (answers.quantity > res[0].stock_quantity) {
