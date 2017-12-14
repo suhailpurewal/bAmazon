@@ -8,6 +8,8 @@
 
 
 ## _Customer_
+file://Images/bAmazonCustomer.gif
+
 The purpose of this part of the application is for the customer to view our current inventory and prices, and to then choose an item to purchase.
 * You launch the application in your command line by typing 'node bamazonCustomer.js'
 * After the command is entered, you get the option to pick an item to purchase.
@@ -16,6 +18,7 @@ The purpose of this part of the application is for the customer to view our curr
 * Then the inventory updates automatically and displays the new level of stock.
 
 ## _Manager_
+file://Images/bAmazonManager.gif
 The purpose of this section of the application is for the manager to change inventory, add items, view low inventory, and to add new products.
 * View Current Inventory
 	This command sorts the table to display lowest inventory items at the top.
@@ -27,6 +30,7 @@ The purpose of this section of the application is for the manager to change inve
 	This allows the user to view current inventory, and is automatically displayed after all other commands are comnpleted.
 
 ## _Supervisor_
+file://Images/bAmazonSupervisor.gif
 The purpose of this section of the application is to provide a top level overview of the total sales/overhead/profits in each department.
 * Create New Department
 	This section allows you to create a new department which you can then assign new products to the inventory.
