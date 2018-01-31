@@ -8,7 +8,7 @@
 
 
 ## _Customer_
-<img src="file://Preview-Images/bAmazonCustomer.gif">
+<img src="file://Preview-Images/bAmazonCustomer.gif"/>
 !(image)[file://Preview-Images/bAmazonCustomer.gif]
 
 The purpose of this part of the application is for the customer to view our current inventory and prices, and to then choose an item to purchase.
