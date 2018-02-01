@@ -8,7 +8,7 @@
 
 
 ## _Customer_
-! [alt text] (file://Preview-Images/bAmazonCustomer.gif "Logo Title Text")
+! [alt text] (https://github.com/suhailpurewal/bAmazon/blob/master/Preview%20Images/bAmazonCustomer.gif?raw=true "Logo Title Text")
 
 The purpose of this part of the application is for the customer to view our current inventory and prices, and to then choose an item to purchase.
 * You launch the application in your command line by typing 'node bamazonCustomer.js'
