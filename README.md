@@ -1,4 +1,4 @@
-# bAmazon Homework
+# bAmazon
 
 ## Overview
 
